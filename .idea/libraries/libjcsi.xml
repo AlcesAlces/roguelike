@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="libjcsi">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib_jcsi/distro/libjcsi.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

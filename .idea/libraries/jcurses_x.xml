@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jcurses-x">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/jcurses-x.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
