@@ -7,6 +7,18 @@ import net.slashie.libjcsi.CSIColor;
 import net.slashie.libjcsi.CharKey;
 import net.slashie.libjcsi.ConsoleSystemInterface;
 import net.slashie.libjcsi.wswing.WSwingConsoleInterface;
+import roguelike.character.CharacterStatusScreen;
+import roguelike.character.LevelUp;
+import roguelike.character.Player;
+import roguelike.combat.Combat;
+import roguelike.creatures.GenerateMonsters;
+import roguelike.creatures.MonsterAIPrototype;
+import roguelike.display.*;
+import roguelike.magic.MagicSpellsBank;
+import roguelike.map.GenerateMap;
+import roguelike.map.Map;
+import roguelike.map.MapCompact;
+import roguelike.map.OverworldMap;
 
 public class MovementCalculator {
     
@@ -136,13 +148,13 @@ public class MovementCalculator {
             
             if (cursorMode) {
                 
-                CursorMode.drawCursor(csi, new Point(35,10), new Point(player.creaturePoint), 
+                CursorMode.drawCursor(csi, new Point(35,10), new Point(player.creaturePoint),
                         activeMap, player, player.frameLocUp, player.frameLocDown);
                 cursorMode = false;
             }
             
             if (castingMode) {
-                MagicSpellsCastMenu.DisplayCastableSpells(csi, player, player.frameLocUp, 
+                MagicSpellsCastMenu.DisplayCastableSpells(csi, player, player.frameLocUp,
                         player.frameLocDown, activeMap, eventLog);
                 castingMode = false;
             }
@@ -217,7 +229,7 @@ public class MovementCalculator {
                             
                             else if (!activeMap.checkForMonsters(tempPoint)) {
                                 if (!activeMap.creatureArrayList.isEmpty()) {
-                                    Combat.meleeCombat(player, activeMap.creatureArrayList.get(activeMap.monsterIndexFound), 
+                                    Combat.meleeCombat(player, activeMap.creatureArrayList.get(activeMap.monsterIndexFound),
                                             eventLog);
                                     player.actionPoints--;
                                     MonsterAIPrototype.findBestRoute(activeMap, player, eventLog);

@@ -1,5 +1,8 @@
 package roguelike;
 
+import roguelike.character.Player;
+import roguelike.map.Map;
+
 public class ActionPointCalculator {
     //Dex is the 3rd stat
     static void calculateTurn(Map map, Player player) {

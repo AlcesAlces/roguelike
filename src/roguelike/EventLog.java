@@ -13,7 +13,7 @@ public class EventLog {
     EventLog() {
     } 
     
-    void manageEventLog(String newEvent) {
+    public void manageEventLog(String newEvent) {
      
         longEventLog.add(newEvent);
         
@@ -37,7 +37,7 @@ public class EventLog {
         }
     }
     
-    void printEventLog(EventLog eventLog, ConsoleSystemInterface csi) {
+    public void printEventLog(EventLog eventLog, ConsoleSystemInterface csi) {
         
         if (eventLog.shortEventLog.size() > 0) {
                         for (int i = 0; i < eventLog.shortEventLog.size();i++) {

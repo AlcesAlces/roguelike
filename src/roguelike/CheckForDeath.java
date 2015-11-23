@@ -1,5 +1,8 @@
 package roguelike;
 
+import roguelike.character.Player;
+import roguelike.map.Map;
+
 public class CheckForDeath {
     
     public static void checkForMonsterDeath(Map map, Player player, EventLog eventLog) {
