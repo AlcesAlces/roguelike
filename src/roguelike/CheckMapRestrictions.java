@@ -1,5 +1,7 @@
 package roguelike;
 
+import roguelike.map.Map;
+
 import java.awt.Point;
 
 public class CheckMapRestrictions {

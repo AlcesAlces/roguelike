@@ -1,6 +1,7 @@
 package roguelike;
 
 
+import roguelike.file.FileReader;
 
 class TestGarbage {
     
