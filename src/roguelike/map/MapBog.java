@@ -85,7 +85,7 @@ public class MapBog extends Map{
         }
     }
         
-        static Map newBog(int sizeX, int sizeY, int monsterAmount, int level) {
+        public static Map newBog(int sizeX, int sizeY, int monsterAmount, int level) {
         
         int mapSizeX = (int) (Math.random() * sizeX) + 100;
         int mapSizeY = (int) (Math.random() * sizeY) + 100;

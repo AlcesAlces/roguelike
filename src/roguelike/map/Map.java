@@ -74,7 +74,10 @@ public class Map {
     String mapName;
     public boolean visited = false;
     public boolean monsterGenerated = false;
-    
+
+
+    MapObject[][] tiles;
+
     /*
      * This is the constructor overloaded from the default constructor,
      * this is going to be used to rebuild the maps.

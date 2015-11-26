@@ -86,7 +86,7 @@ public class MapWasteland extends Map{
         }
     }
         
-        static Map newWasteland(int sizeX, int sizeY, int monsterAmount, int level) {
+        public static Map newWasteland(int sizeX, int sizeY, int monsterAmount, int level) {
         
         int mapSizeX = (int) (Math.random() * sizeX) + 100;
         int mapSizeY = (int) (Math.random() * sizeY) + 100;

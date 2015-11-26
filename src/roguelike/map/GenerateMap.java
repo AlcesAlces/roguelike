@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import roguelike.creatures.GenerateMonsters;
+import roguelike.map.*;
 import roguelike.map.mapObjects.Wall;
 
 public class GenerateMap {
