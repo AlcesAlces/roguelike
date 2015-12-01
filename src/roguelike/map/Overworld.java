@@ -1,16 +1,17 @@
 package roguelike.map;
 
 import java.awt.*;
+import java.io.Serializable;
 
 /*
     Overworld is going to be what keeps track of each map.
     More specifically this controls all overworld actions.
  */
-public class Overworld {
+public class Overworld implements Serializable {
 
-    int sizeX;
-    int sizeY;
-    MapTiny[][] allMaps;
+    public int sizeX;
+    public int sizeY;
+    public MapTiny[][] allMaps;
     Map currentMap;
 
     public Overworld(int x, int y)

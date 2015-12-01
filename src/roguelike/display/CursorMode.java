@@ -19,10 +19,10 @@ public class CursorMode {
         
         while (cursorMode) {
         csi.cls();      
-        map.drawFrame(csi);
-        map.drawElements(csi, frameLocUp, frameLocDown, null);
-        map.drawItems(frameLocUp, frameLocDown, csi);
-        map.drawPlayerStatus(player, csi);
+        //map.drawFrame(csi);
+        //map.drawElements(csi, frameLocUp, frameLocDown, null);
+        //map.drawItems(frameLocUp, frameLocDown, csi);
+        //map.drawPlayerStatus(player, csi);
         csi.print(player.creaturePoint.x - (frameLocUp.x - 1),player.creaturePoint.y - (frameLocUp.y - 1), '@', CSIColor.WHITE);
             
         Point tempPoint = new Point(cursorPointActual);
@@ -76,29 +76,29 @@ public class CursorMode {
     public static void displayDetectedObjects(Map map, Point cursorPointActual,
             ConsoleSystemInterface csi, Player player) {
         
-        if (!map.checkMonsterPositions(cursorPointActual)) {
-            csi.print(1, 23, map.creatureArrayList.get(map.monsterIndexFound).name, 
-                    CSIColor.WHITE);
-            csi.print(1, 24, "the " + map.creatureArrayList.get(map.monsterIndexFound).identifyRace(map.creatureArrayList.get(map.monsterIndexFound).raceID), 
-                    CSIColor.WHITE);
-        }
-        
-        else if (cursorPointActual.equals(player.creaturePoint)) {
-            
-            csi.print(1, 23, player.name, CSIColor.WHITE);
-            csi.print(1, 24, "the " + player.identifyRace(player.raceID), CSIColor.WHITE);
-            
-        }
-        
-        else {
-            
-            for (int i = 0; i < map.treeArray.size();i++) {
-                
-                if(cursorPointActual.equals(map.treeArray.get(i).position)) {
-                    
-                    csi.print(1, 23, "A tree");
-                }
-            }
-        }
+//        if (!map.checkMonsterPositions(cursorPointActual)) {
+//            csi.print(1, 23, map.creatureArrayList.get(map.monsterIndexFound).name,
+//                    CSIColor.WHITE);
+//            csi.print(1, 24, "the " + map.creatureArrayList.get(map.monsterIndexFound).identifyRace(map.creatureArrayList.get(map.monsterIndexFound).raceID),
+//                    CSIColor.WHITE);
+//        }
+//
+//        else if (cursorPointActual.equals(player.creaturePoint)) {
+//
+//            csi.print(1, 23, player.name, CSIColor.WHITE);
+//            csi.print(1, 24, "the " + player.identifyRace(player.raceID), CSIColor.WHITE);
+//
+//        }
+//
+//        else {
+//
+//            for (int i = 0; i < map.treeArray.size();i++) {
+//
+//                if(cursorPointActual.equals(map.treeArray.get(i).position)) {
+//
+//                    csi.print(1, 23, "A tree");
+//                }
+//            }
+//        }
     }
 }

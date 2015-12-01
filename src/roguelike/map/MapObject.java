@@ -13,7 +13,6 @@ public abstract class MapObject {
         this.type = type;
         this.position = position;
         this.isPassable = isPassable;
-                
     }
     
 }

@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="jcurses-x">
+  <library name="slf4j-api-1.7.13">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/jcurses-x.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../slf4j-api-1.7.13.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

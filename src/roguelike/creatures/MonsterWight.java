@@ -70,13 +70,13 @@ public class MonsterWight extends Creature{
                     RaceInitialStats.randomGhostNames((int) (Math.random() * 11)));
             monster.classID = randClass;
             monster.baseHealth = monster.stats[0];
-            monster.level = map.zoneInfluence / 5;
+            //monster.level = map.zoneInfluence / 5;
             monster.giveWeapon();
             monster.adjustLevelStats();
             monster.statInitializer();
             monster.updateStats();
             monster.statInitializer();
-            monster.mapID = map.mapID;
+            //monster.mapID = map.mapID;
             
             return monster;
     }

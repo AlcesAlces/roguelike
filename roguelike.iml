@@ -7,9 +7,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="jcurses-x" level="project" />
-    <orderEntry type="library" name="libjcsi" level="project" />
+    <orderEntry type="library" exported="" name="blacken-core-1.1.1" level="project" />
     <orderEntry type="library" name="libjcsi (2)" level="project" />
     <orderEntry type="library" name="libjcsi_resources" level="project" />
+    <orderEntry type="library" name="slf4j-api-1.7.13" level="project" />
   </component>
 </module>

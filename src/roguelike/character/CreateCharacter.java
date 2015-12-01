@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import net.slashie.libjcsi.CSIColor;
 import net.slashie.libjcsi.CharKey;
 import net.slashie.libjcsi.ConsoleSystemInterface;
+import roguelike.Global;
 import roguelike.stats.TraitDescription;
 
 public class CreateCharacter {
@@ -96,58 +97,62 @@ public class CreateCharacter {
             }
             
             if (creationStep == 5) {
-                
-                int lineToPrint = traitsToDisplay.get(0).size();
-                csi.print(32,2,  "Trait Selection", CSIColor.WHITE);
-                
-                for (int i = 0; i < traitsToDisplay.get(0).size(); i++) {
-                    
-                    csi.print(40, i + 4, ""+traitsToDisplay.get(0).get(i), isActiveMenu(i, activeMenuOption));
-                    if (i == tagged1 || i == tagged2) {
-                        csi.print(39, i + 4, "*", CSIColor.PURPLE);
-                    }
-                }
-                
-                for (int i = 0; i < traitsToDisplay.get(1).size(); i++) {
-                    
-                    if ((i + lineToPrint) == tagged1 || (i + lineToPrint) == tagged2) {
-                        csi.print(39, i + 4 + lineToPrint, "*", CSIColor.PURPLE);
-                    }
-                    
-                    csi.print(40, i + 4 + lineToPrint, "" 
-                            + traitsToDisplay.get(1).get(i), isActiveMenu(i + traitsToDisplay.get(0).size(), activeMenuOption));
-                }
-                
-                lineToPrint = lineToPrint + traitsToDisplay.get(1).size();
-                        
-                for (int i = 0; i < traitsToDisplay.get(2).size(); i++) {
-                    
-                    if ((i + lineToPrint) == tagged1 || (i + lineToPrint) == tagged2) {
-                        csi.print(39, i + 4 + lineToPrint, "*", CSIColor.PURPLE);
-                    }
-                    
-                    csi.print(40, i + 4 + lineToPrint, "" 
-                            + traitsToDisplay.get(2).get(i), isActiveMenu(i + traitsToDisplay.get(0).size() + traitsToDisplay.get(1).size(), activeMenuOption));
-                }
-                
-                lineToPrint = lineToPrint + traitsToDisplay.get(2).size();
-                
-                for (int i = 0; i < traitsToDisplay.get(3).size(); i++) {
-                    
-                    if ((i + lineToPrint) == tagged1 || (i + lineToPrint) == tagged2) {
-                        csi.print(39, i + 4 + lineToPrint, "*", CSIColor.PURPLE);
-                    }
-                    
-                    csi.print(40, i + 4 + lineToPrint, "" 
-                            + traitsToDisplay.get(3).get(i), isActiveMenu(i + traitsToDisplay.get(0).size() + traitsToDisplay.get(1).size() + traitsToDisplay.get(2).size(), activeMenuOption));
-                }
-                
-                csi.print(1, 4, "" + TraitDescription.get(activeMenuOption).get(0), CSIColor.RED);
-                csi.print(1, 5, "" + TraitDescription.get(activeMenuOption).get(1), CSIColor.RED);
-                if (TraitDescription.get(activeMenuOption).size() == 3) {
-                    csi.print(1, 6, "" + TraitDescription.get(activeMenuOption).get(2), CSIColor.RED);
-                }
-                csi.print(35,22, "Pick 2 traits. " + remainingPoints + " Remaining." , CSIColor.GRAY);
+
+                //TODO: Fix this by removing this hack:
+                creationStep++;
+                continue;
+
+//                int lineToPrint = traitsToDisplay.get(0).size();
+//                csi.print(32,2,  "Trait Selection", CSIColor.WHITE);
+//
+//                for (int i = 0; i < traitsToDisplay.get(0).size(); i++) {
+//
+//                    csi.print(40, i + 4, ""+traitsToDisplay.get(0).get(i), isActiveMenu(i, activeMenuOption));
+//                    if (i == tagged1 || i == tagged2) {
+//                        csi.print(39, i + 4, "*", CSIColor.PURPLE);
+//                    }
+//                }
+//
+//                for (int i = 0; i < traitsToDisplay.get(1).size(); i++) {
+//
+//                    if ((i + lineToPrint) == tagged1 || (i + lineToPrint) == tagged2) {
+//                        csi.print(39, i + 4 + lineToPrint, "*", CSIColor.PURPLE);
+//                    }
+//
+//                    csi.print(40, i + 4 + lineToPrint, ""
+//                            + traitsToDisplay.get(1).get(i), isActiveMenu(i + traitsToDisplay.get(0).size(), activeMenuOption));
+//                }
+//
+//                lineToPrint = lineToPrint + traitsToDisplay.get(1).size();
+//
+//                for (int i = 0; i < traitsToDisplay.get(2).size(); i++) {
+//
+//                    if ((i + lineToPrint) == tagged1 || (i + lineToPrint) == tagged2) {
+//                        csi.print(39, i + 4 + lineToPrint, "*", CSIColor.PURPLE);
+//                    }
+//
+//                    csi.print(40, i + 4 + lineToPrint, ""
+//                            + traitsToDisplay.get(2).get(i), isActiveMenu(i + traitsToDisplay.get(0).size() + traitsToDisplay.get(1).size(), activeMenuOption));
+//                }
+//
+//                lineToPrint = lineToPrint + traitsToDisplay.get(2).size();
+//
+//                for (int i = 0; i < traitsToDisplay.get(3).size(); i++) {
+//
+//                    if ((i + lineToPrint) == tagged1 || (i + lineToPrint) == tagged2) {
+//                        csi.print(39, i + 4 + lineToPrint, "*", CSIColor.PURPLE);
+//                    }
+//
+//                    csi.print(40, i + 4 + lineToPrint, ""
+//                            + traitsToDisplay.get(3).get(i), isActiveMenu(i + traitsToDisplay.get(0).size() + traitsToDisplay.get(1).size() + traitsToDisplay.get(2).size(), activeMenuOption));
+//                }
+//
+//                csi.print(1, 4, "" + TraitDescription.get(activeMenuOption).get(0), CSIColor.RED);
+//                csi.print(1, 5, "" + TraitDescription.get(activeMenuOption).get(1), CSIColor.RED);
+//                if (TraitDescription.get(activeMenuOption).size() == 3) {
+//                    csi.print(1, 6, "" + TraitDescription.get(activeMenuOption).get(2), CSIColor.RED);
+//                }
+//                csi.print(35,22, "Pick 2 traits. " + remainingPoints + " Remaining." , CSIColor.GRAY);
                 
             }
             
@@ -157,8 +162,12 @@ public class CreateCharacter {
             
             
             CharKey dir = csi.inkey();
-            
-            
+
+            if(dir.code == CharKey.q){
+                closeMainMenu = true;
+                System.out.println("Stop get");
+            }
+
             if (creationStep == 1) {
             
                 if(dir.isUpArrow() && (activeMenuOption > 0)) {
@@ -170,19 +179,19 @@ public class CreateCharacter {
             if(dir.code == CharKey.ENTER) {
                 if (activeMenuOption == 0) {
                     racePicked = "Human";
-                    raceID = 00;
+                    raceID = 0;
                 }
                 if (activeMenuOption == 1) {
                     racePicked = "Elf";
-                    raceID = 01;
+                    raceID = 1;
                 }
                 if (activeMenuOption == 2) {
                     racePicked = "Orc";
-                    raceID = 02;
+                    raceID = 2;
                 }
                 if (activeMenuOption == 3) {
                     racePicked = "FlyingNun";
-                    raceID = 03;
+                    raceID = 3;
             }
                 activeMenuOption = 0;
                 int[] raceBonusStats = RaceInitialStats.startingStats(raceID);
@@ -197,19 +206,22 @@ public class CreateCharacter {
             }
             
             else if (creationStep == 2) {
+
                 if (dir.code == CharKey.BACKSPACE) {
                     characterName = characterName.substring(0, characterName.length() - 1);
-                }
-                
-                else if (dir.code == CharKey.ENTER) {
+                } else if (dir.code == CharKey.ENTER) {
+                    playerCharacter.name = characterName;
                     creationStep++;
+                } else if (dir.code != CharKey.NONE) {
+                    if (characterName.length() > 10) {
+                        //TODO: Print name too long message.
+                    }
+                    else {
+                        characterName = characterName + dir.toString();
+                    }
                 }
-                
-                else if (dir.code != CharKey.NONE){
-                    characterName = characterName + dir.toString();
-                }
-                
-                }
+
+            }
             
             else if (creationStep == 3) {
                 if(dir.isUpArrow() && (activeMenuOption > 0)) {
@@ -221,15 +233,15 @@ public class CreateCharacter {
             if(dir.code == CharKey.ENTER) {
                 if (activeMenuOption == 0) {
                     classPicked = "Warrior";
-                    classID = 00;
+                    classID = 0;
                 }
                 if (activeMenuOption == 1) {
                     classPicked = "Rogue";
-                    classID = 01;
+                    classID = 1;
                 }
                 if (activeMenuOption == 2) {
                     classPicked = "Wizard";
-                    classID = 02;
+                    classID = 2;
                 }
                 
                 //RaceInitialStats traits = new RaceInitialStats(raceID);
@@ -287,13 +299,13 @@ public class CreateCharacter {
                     }
                 }
             }
-                
-            
-            if(dir.code == CharKey.Q){
-		closeMainMenu = true;
-                System.out.println("Stop get");
-			}
-   
+
+            else if(creationStep == 6)
+            {
+                //Done creating character
+                Global.player = playerCharacter;
+                closeMainMenu = true;
+            }
         }
         
     }

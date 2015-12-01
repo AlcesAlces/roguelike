@@ -81,9 +81,9 @@ public class InGameMenu {
                         if(dir.code == CharKey.ENTER) {
                             if(activeSubmenu == 0) {
                                 //save
-                                FileWriter.WriteMap(mapArray, player.name);
-                                FileWriter.WriteMonsters(mapArray, player.name);
-                                FileWriter.WritePlayer(player);
+                                //FileWriter.WriteMap(mapArray, player.name);
+                                //FileWriter.WriteMonsters(mapArray, player.name);
+                                //FileWriter.WritePlayer(player);
                                 decided = true;
                             }
                             else {

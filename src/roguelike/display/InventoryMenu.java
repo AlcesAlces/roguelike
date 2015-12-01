@@ -156,7 +156,8 @@ public class InventoryMenu {
                 
                 eventLog.manageEventLog("You drop the " + itemArray.get(activeMenuOption));
                 itemArray.get(activeMenuOption).pointOnMap = new Point(player.creaturePoint);
-                map.itemsOnMap.add(itemArray.get(activeMenuOption));
+                //TODO: Fix this
+                //map.itemsOnMap.add(itemArray.get(activeMenuOption));
                 itemArray.remove(activeMenuOption);
                 
             }

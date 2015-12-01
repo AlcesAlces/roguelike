@@ -3,6 +3,7 @@ package roguelike.display;
 import net.slashie.libjcsi.CSIColor;
 import net.slashie.libjcsi.CharKey;
 import net.slashie.libjcsi.ConsoleSystemInterface;
+import roguelike.Global;
 import roguelike.Items.ItemPotionGenerator;
 import roguelike.Items.ItemScrollGenerator;
 import roguelike.Items.ArmorGeneration;
@@ -12,12 +13,15 @@ import roguelike.character.CreateCharacter;
 import roguelike.character.Player;
 
 public class MainMenu {
-    
-    public void drawMainMenu(ConsoleSystemInterface csi, Player player) {
+
+    public enum returnState {newGame, load, exit}
+
+    public returnState drawMainMenu(ConsoleSystemInterface csi, Player player) {
         
         int activeMenuOption = 0;
         boolean closeMainMenu = false;
         CSIColor activeColor = CSIColor.GREEN;
+        returnState state = returnState.exit;
         
         while(!closeMainMenu) {
             
@@ -65,10 +69,14 @@ public class MainMenu {
             if(dir.code == CharKey.ENTER) {
                 if (activeMenuOption == 0) {
                     System.out.println("Save not implimented");
+                    state = returnState.load;
+                    closeMainMenu = true;
                 }
                 if (activeMenuOption == 1) {
                     CreateCharacter newCharacter = new CreateCharacter();
                     newCharacter.drawCharacterCreator(csi, player);
+                    state = returnState.newGame;
+                    closeMainMenu = true;
                 }
                 if (activeMenuOption == 2) {
                     System.exit(0);
@@ -141,7 +149,7 @@ public class MainMenu {
                     player.statInitializer();
                     player.bonusMelee[0] = 1;
                     player.manaRegenIndex = 3;
-                    
+                    Global.player = player;
                     closeMainMenu = true;
                 }
             }
@@ -149,5 +157,6 @@ public class MainMenu {
 		closeMainMenu = true;
 			}
 }
+        return state;
     }
 }
