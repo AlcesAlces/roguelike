@@ -43,7 +43,7 @@ public class FeatureGenerator {
         for(int i = 0; i < toGen.x; i++){
             for(int j = 0; j < toGen.y; j++){
                 //TODO: Relocate the symbol for grass somewhere?
-                toGen.tiles[i][j] = new Tile(new Position(i,j), ",", Tile.tiletype.floor, true, CSIColor.GREEN);
+                toGen.tiles[i][j] = new Tile(new Position(i,j), ",", Tile.tiletype.floor, true, "Green");
             }
         }
     }

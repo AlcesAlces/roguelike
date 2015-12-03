@@ -30,27 +30,31 @@ public class Map implements Serializable{
     public Position pos;
     private String path = "";
 
-    public boolean checkMove(Direction dir, Position pos)
+    public boolean checkMove(Direction dir, Point pos)
     {
-        Position temp = new Position(0,0);
+        Point temp = new Point(0,0);
 
         switch(dir)
         {
             case up:
-                temp = new Position(pos.x, pos.y + 1);
+                temp = new Point(pos.x, pos.y - 1);
                 break;
             case down:
-                temp = new Position(pos.x, pos.y - 1);
+                temp = new Point(pos.x, pos.y + 1);
                 break;
             case left:
-                temp = new Position(pos.x - 1, pos.y);
+                temp = new Point(pos.x - 1, pos.y);
                 break;
             case right:
-                temp = new Position(pos.x + 1, pos.y);
+                temp = new Point(pos.x + 1, pos.y);
                 break;
         }
-
-        return (tiles[temp.x][temp.y].isPass && !tiles[temp.x][temp.y].isOccupied);
+        if(temp.x < 0 || temp.y < 0 || temp.x >= x || temp.y >= y){
+            return false;
+        }
+        else {
+            return (tiles[temp.x][temp.y].isPass && !tiles[temp.x][temp.y].isOccupied);
+        }
     }
 
     public void moveCharacter(Creature toMove, Direction dir)
@@ -61,10 +65,10 @@ public class Map implements Serializable{
         switch(dir)
         {
             case up:
-                temp = new Position(pos.x, pos.y + 1);
+                temp = new Position(pos.x, pos.y - 1);
                 break;
             case down:
-                temp = new Position(pos.x, pos.y - 1);
+                temp = new Position(pos.x, pos.y + 1);
                 break;
             case left:
                 temp = new Position(pos.x - 1, pos.y);

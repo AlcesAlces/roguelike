@@ -11,6 +11,6 @@ public class Grass extends Tile implements Serializable{
 
     public Grass(Position p, String s, Tile.tiletype t, Boolean pass)
     {
-        super(p,s,t,pass, CSIColor.GREEN);
+        super(p,s,t,pass, "Green");
     }
 }
