@@ -56,7 +56,6 @@ public class Roguelike {
         while (running) {
             int yLen = term.getHeight();
             int xLen = term.getWidth();
-
             term.clear();
             //Contain all of our drawing garbage
             DrawMap.drawAllElements(displayPoint, map, player, term, xLen, yLen, palette);

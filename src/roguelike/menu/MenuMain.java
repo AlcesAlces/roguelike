@@ -17,5 +17,6 @@ public class MenuMain extends Menu {
         {
             items.add(new MenuItem("Debug", 3, false, ac, p.get("Red")));
         }
+        this.splash = splashtype.logo;
     }
 }

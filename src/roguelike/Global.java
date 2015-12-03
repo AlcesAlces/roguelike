@@ -35,6 +35,10 @@ public class Global {
         config.put("room:wall:top-right", "\u2556".codePointAt(0)); // Lh/Hv
         config.put("room:wall:bottom-left", "\u2558".codePointAt(0)); // Hh/Lv
         config.put("room:wall:bottom-right", "\u255D".codePointAt(0)); // Hv/Hh
+        config.put("menu:top-left", "\u2553".codePointAt(0)); // Hv/Hh//╔ 2553
+        config.put("menu:top-right", "\u2557".codePointAt(0)); // Hv/Hh//╗2557
+        config.put("menu:bottom-right", "\u2557".codePointAt(0)); //
+        config.put("menu:bottom-left", "\u2557".codePointAt(0)); //
 
         // game specific
         config.put("void", " ".codePointAt(0));
