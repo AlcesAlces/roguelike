@@ -1,6 +1,7 @@
 package roguelike.creatures;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
 import net.slashie.libjcsi.CSIColor;
 import roguelike.Items.*;
@@ -14,7 +15,7 @@ import roguelike.character.RaceInitialStats;
 // Bonus Melee abilities: Power Attack, Double Attack
 // Bonus Magic Abilities: 
 
-public abstract class Creature {
+public abstract class Creature implements Serializable{
     
     public int[] stats;
     public int[] activeStats = new int[7];

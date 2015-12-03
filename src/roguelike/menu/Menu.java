@@ -29,7 +29,8 @@ public class Menu {
     public int logoX = 0;
     public int logoY = 0;
     //TODO: Fill in.
-    public String menuTitle = "Fill me in dammit";
+    public String menuTitle = "Planes of Endatl";
+    int menuTitleColor;
 
     public Menu(Boolean c){
         centered = c;
@@ -55,6 +56,7 @@ public class Menu {
 
     public void drawMenu(CursesLikeAPI term, ColorPalette palette){
 
+        menuTitleColor = palette.get("White");
         boolean menu = true;
         while(menu) {
             term.clear();
@@ -86,7 +88,7 @@ public class Menu {
 
     }
 
-    private void draw(CursesLikeAPI term){
+    protected void draw(CursesLikeAPI term){
 
         int xLen = term.getWidth();
         int yLen = term.getHeight();
@@ -98,6 +100,7 @@ public class Menu {
                 splashPoint = new Point(0,yLen/2);
                 drawFrame(term, term.getHeight(), term.getWidth());
                 yLen = yLen/2;
+                drawSplash(term, xLen, yLen);
                 break;
             case border:
                 //The border starts at 1,1 and goes x-2 and y-2 (1 block on both sides)
@@ -113,6 +116,7 @@ public class Menu {
 
         int xHalf = (xLen/2);
         int yHalf = (yLen);
+        int yOffset = (yLen/4);
 
         if(scrollable){
 
@@ -121,9 +125,9 @@ public class Menu {
             for (MenuItem item : items) {
                 int offset = item.text.length() / 2;
                 int startX = (splashPoint.x + xHalf - offset);
-                term.mvputs(yHalf + item.index, startX, item.text);
+                term.mvputs(yOffset + yHalf + item.index, startX, item.text);
                 for(int i = startX; i < startX + item.text.length(); i++) {
-                    term.get(yHalf + item.index, i).setForeground(item.getColor());
+                    term.get(yOffset + yHalf + item.index, i).setForeground(item.getColor());
                 }
             }
         }
@@ -131,6 +135,16 @@ public class Menu {
 
     public void drawBorder(){
 
+    }
+
+    public void drawSplash(CursesLikeAPI term, int xLen, int yLen){
+
+        int startX = (xLen/2) - (menuTitle.length() / 2);
+        int startY = (yLen/2);
+        term.mvputs(startY,startX, menuTitle);
+        for(int i = startX; i < startX + menuTitle.length(); i++) {
+            //term.get(startY, i).setForeground(menuTitleColor);
+        }
     }
 
     public void drawFrame(CursesLikeAPI term, int yMax, int xMax){

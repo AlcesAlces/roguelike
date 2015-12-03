@@ -14,6 +14,9 @@ public class Global {
     public static int maxLength = 80;
     public static boolean debug = true;
 
+    //File stuff
+    public static String saveDir = "";
+
     public static void setUpGlobal()
     {
         populateConfig();

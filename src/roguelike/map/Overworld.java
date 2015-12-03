@@ -1,5 +1,7 @@
 package roguelike.map;
 
+import roguelike.map.generation.GenerateOverworld;
+
 import java.awt.*;
 import java.io.Serializable;
 
@@ -35,7 +37,7 @@ public class Overworld implements Serializable {
      */
     public void FillOverworld()
     {
-
+        allMaps = GenerateOverworld.createOverworld(sizeX, sizeY);
     }
 
     public boolean SwapMaps(Point newPoint)
@@ -49,5 +51,9 @@ public class Overworld implements Serializable {
         {
             return false;
         }
+    }
+
+    public Map getCurrentMap(){
+        return currentMap;
     }
 }

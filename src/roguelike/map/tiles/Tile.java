@@ -35,6 +35,7 @@ public class Tile implements Serializable {
     public boolean isPass;
     public boolean isOccupied = false;
     public boolean generated = false;
+    public boolean isTransition = false;
     public ArrayList<Map.Direction> cellWalls = new ArrayList<>();
 
     public Tile()

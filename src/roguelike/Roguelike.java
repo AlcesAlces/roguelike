@@ -5,12 +5,18 @@ import com.googlecode.blacken.colors.ColorPalette;
 import com.googlecode.blacken.swing.SwingTerminal;
 import com.googlecode.blacken.terminal.BlackenKeys;
 import com.googlecode.blacken.terminal.CursesLikeAPI;
+import com.sun.istack.internal.Nullable;
+import net.slashie.util.Position;
 import roguelike.character.Player;
 import roguelike.display.DrawMap;
 import roguelike.display.DrawUi;
+import roguelike.file.FileReader;
+import roguelike.file.FileWriter;
 import roguelike.map.Map;
+import roguelike.map.Overworld;
 import roguelike.map.generation.Feature;
 import roguelike.map.generation.GenerateMap;
+import roguelike.map.generation.GenerateOverworld;
 import roguelike.menu.MenuMain;
 
 import java.awt.Point;
@@ -37,19 +43,26 @@ public class Roguelike {
             term.setCurForeground("White");
         }
 
+        //Main menu section.
         MenuMain main = new MenuMain(false,palette);
         main.drawMenu(term, palette);
 
-        //Handle all the map things.
+        //Handle map init based on user selections in main menu.
+        Overworld ow = handleContent(main.responseIndex);
+        boolean running = true;
+        if(ow == null) {
+            running = false;
+        }
         ArrayList<Feature> feat = new ArrayList<>();
         feat.add(new Feature(Feature.feature.grass_floor, 100));
-        //Active map
-        Map map = GenerateMap.generateNewMap(feat);
-        ArrayList<Object> dummyItemArray = new ArrayList<>();
-        int[] dummyArray = {0, 0, 0, 0, 0, 0, 0};
-        Player player = new Player(dummyArray, new Point(10, 10), dummyItemArray, 0, 0, 0, "Echdah");
 
-        boolean running = true;
+        //Active map
+        Map map = ow.getCurrentMap();
+        ArrayList<Object> dummyItemArray = new ArrayList<>();
+        Player player = Global.player;
+
+
+        //Sets up where we draw the center of the screen.
         Point displayPoint = new Point((player.creaturePoint.x - (term.getWidth() / 2)),
                 player.creaturePoint.y - (term.getHeight() / 2));
 
@@ -100,10 +113,53 @@ public class Roguelike {
         }
     }
 
+    //Decides how to proceed
+    @Nullable
+    public static Overworld handleContent(int resp){
+
+        Overworld toReturn = null;
+        switch(resp) {
+            case 0:
+                //continue
+                break;
+            case 1:
+                //New game
+                //Create Character.
+
+                int defaultX = 50;
+                int defaultY = 50;
+                toReturn = new Overworld(defaultX, defaultY);
+                toReturn.FillOverworld();
+                break;
+            case 2:
+            default:
+                break;
+        }
+
+        return toReturn;
+    }
+
     public static void main(String[] args) {
 
         Global.setUpGlobal();
-        loop();
+        Global.saveDir = "echdah-save";
+
+        ArrayList<Feature> feature = new ArrayList<>();
+        feature.add(new Feature(Feature.feature.grass_floor, 100));
+        Map t = GenerateMap.generateNewMap(feature, new Overworld(1,1));
+        t.pos = new Position(1,1);
+
+        FileWriter.saveMap(t);
+
+        Overworld o = new Overworld(5,5);
+        o.allMaps = GenerateOverworld.createOverworld(5,5);
+
+        FileWriter.saveOverwolrd(o);
+
+        Player player = new Player(new int[8], new Point(0,0), new ArrayList<Object>(), 0, 0, 0, "echdah");
+        FileWriter.savePlayer(player);
+
+        //loop();
         //MovementCalculator test = new MovementCalculator();
 
         //test.initializeMovement();

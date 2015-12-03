@@ -4,6 +4,7 @@ import net.slashie.libjcsi.CSIColor;
 import net.slashie.util.Position;
 import roguelike.Global;
 import roguelike.map.Map;
+import roguelike.map.Overworld;
 import roguelike.map.tiles.Tile;
 
 import java.awt.*;
@@ -15,7 +16,7 @@ public class GenerateMap {
     static int scaleX = 100;
     static int scaleY = 50;
 
-    public static Map generateNewMap(ArrayList<Feature> features)
+    public static Map generateNewMap(ArrayList<Feature> features, Overworld overworld)
     {
         //Empty constructor, all default values.
         Map map = new Map();
@@ -95,6 +96,10 @@ public class GenerateMap {
                 }
             }
         }
+    }
+
+    private static void generateTransitions(Overworld ow){
+
     }
 
 }
