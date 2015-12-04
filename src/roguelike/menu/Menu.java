@@ -98,16 +98,19 @@ public class Menu {
             case logo:
                 //Take up half the screen for a sweet logo.
                 splashPoint = new Point(0,yLen/2);
-                drawFrame(term, term.getHeight(), term.getWidth());
+                drawFrame(term, term.getHeight(), term.getWidth(), splashPoint);
                 yLen = yLen/2;
                 drawSplash(term, xLen, yLen);
                 break;
             case border:
                 //The border starts at 1,1 and goes x-2 and y-2 (1 block on both sides)
                 splashPoint = new Point(1,1);
-                xLen -= 2;
-                yLen -=2;
-                drawBorder();
+                int tempX = xLen;
+                int tempY = yLen;
+                //xLen /= 2;
+                yLen /= 2;
+                drawFrame(term, tempY, tempX, new Point(0, tempY));
+                drawTitleTop(term, tempX, tempY);
                 break;
             case none:
             default:
@@ -120,14 +123,26 @@ public class Menu {
 
         if(scrollable){
 
+//            for (MenuItem item : items) {
+//                int offset = item.text.length() / 2;
+//                int startX = (splashPoint.x + xHalf - offset);
+//                term.mvputs(yOffset + yHalf + item.index, startX, item.text);
+//                for(int i = startX; i < startX + item.text.length(); i++) {
+//                    term.get(yOffset + yHalf + item.index, i).setForeground(item.getColor());
+//                }
+//            }
         }
         else {
             for (MenuItem item : items) {
                 int offset = item.text.length() / 2;
                 int startX = (splashPoint.x + xHalf - offset);
-                term.mvputs(yOffset + yHalf + item.index, startX, item.text);
+                int startY = yHalf + item.index;
+                if(splash == splashtype.logo){
+                    startY += yOffset;
+                }
+                term.mvputs(startY, startX, item.text);
                 for(int i = startX; i < startX + item.text.length(); i++) {
-                    term.get(yOffset + yHalf + item.index, i).setForeground(item.getColor());
+                    term.get(startY, i).setForeground(item.getColor());
                 }
             }
         }
@@ -147,7 +162,17 @@ public class Menu {
         }
     }
 
-    public void drawFrame(CursesLikeAPI term, int yMax, int xMax){
+    public void drawTitleTop(CursesLikeAPI term, int xLen, int yLen){
+        int xOffset = menuTitle.length() / 2;
+        int startX = (xLen/2) - xOffset;
+        int startY = 0;
+        //y will always start at 0
+        term.mvputs(startY, startX, menuTitle);
+    }
+
+    public void drawFrame(CursesLikeAPI term, int yMax, int xMax, Point btmLeft){
+
+        //TODO: The top left, top right, etc aren't working for some reason fix them.
 
         //Top left
         Point temp = new Point(0,0);
@@ -156,14 +181,18 @@ public class Menu {
         walls.add(CellWalls.TOP);
         walls.add(CellWalls.LEFT);
         cell.setCellWalls(new HashSet<>(walls));
+        int ich = Global.config.get("menu:top-left");
+        term.mvputs(temp.y, temp.x, String.valueOf((char)ich));
 
         //Bottom left
-        temp = new Point(0, splashPoint.y - 1);
+        temp = new Point(0, btmLeft.y - 1);
         cell = term.get(temp.y, temp.x);
         walls.clear();
         walls.add(CellWalls.BOTTOM);
         walls.add(CellWalls.LEFT);
         cell.setCellWalls(new HashSet<>(walls));
+        ich = Global.config.get("menu:bottom-left");
+        term.mvputs(temp.y, temp.x, String.valueOf((char)ich));
         //Top Right
         temp = new Point(xMax-1, 0);
         cell = term.get(temp.y, temp.x);
@@ -171,14 +200,20 @@ public class Menu {
         walls.add(CellWalls.TOP);
         walls.add(CellWalls.RIGHT);
         cell.setCellWalls(new HashSet<>(walls));
+        ich = Global.config.get("menu:top-right");
+        term.mvputs(temp.y, temp.x, String.valueOf((char)ich));
         //Bottom Right
-        temp = new Point(xMax - 1, splashPoint.y - 1);
+        temp = new Point(xMax - 1, btmLeft.y - 1);
         cell = term.get(temp.y, temp.x);
         walls.clear();
         walls.add(CellWalls.BOTTOM);
         walls.add(CellWalls.RIGHT);
         cell.setCellWalls(new HashSet<>(walls));
+        ich = Global.config.get("menu:bottom-right");
+        term.mvputs(temp.y, temp.x, String.valueOf((char)ich));
 
+        ich = Global.config.get("menu:horiz");
+        int ich2 = Global.config.get("menu:horiz");
         for(int i = 1; i < xMax - 1; i++){
             //Walls Top
             temp = new Point(i, 0);
@@ -186,26 +221,32 @@ public class Menu {
             walls.clear();
             walls.add(CellWalls.TOP);
             cell.setCellWalls(new HashSet<>(walls));
+            term.mvputs(temp.y, temp.x, String.valueOf((char)ich));
             //Walls Bottom
-            temp = new Point(i, splashPoint.y - 1);
+            temp = new Point(i, btmLeft.y - 1);
             cell = term.get(temp.y, temp.x);
             walls.clear();
             walls.add(CellWalls.BOTTOM);
             cell.setCellWalls(new HashSet<>(walls));
+            term.mvputs(temp.y, temp.x, String.valueOf((char)ich2));
         }
-        for(int i = 1; i < splashPoint.y - 1; i++){
+        ich = Global.config.get("menu:vert");
+        ich2 = Global.config.get("menu:vert");
+        for(int i = 1; i < btmLeft.y - 1; i++){
             //Walls right
             temp = new Point(0, i);
             cell = term.get(temp.y, temp.x);
             walls.clear();
             walls.add(CellWalls.LEFT);
             cell.setCellWalls(new HashSet<>(walls));
+            term.mvputs(temp.y, temp.x, String.valueOf((char)ich2));
             //Walls left
             temp = new Point(xMax - 1, i);
             cell = term.get(temp.y, temp.x);
             walls.clear();
             walls.add(CellWalls.RIGHT);
             cell.setCellWalls(new HashSet<>(walls));
+            term.mvputs(temp.y, temp.x, String.valueOf((char)ich));
         }
     }
 }

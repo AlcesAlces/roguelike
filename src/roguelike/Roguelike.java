@@ -17,6 +17,7 @@ import roguelike.map.Overworld;
 import roguelike.map.generation.Feature;
 import roguelike.map.generation.GenerateMap;
 import roguelike.map.generation.GenerateOverworld;
+import roguelike.menu.MenuCreateCharacter;
 import roguelike.menu.MenuMain;
 
 import java.awt.Point;
@@ -42,6 +43,9 @@ public class Roguelike {
         if (palette.containsKey("White")) {
             term.setCurForeground("White");
         }
+
+        MenuCreateCharacter m = new MenuCreateCharacter(palette);
+        m.drawMenu(term, palette);
 
         //Main menu section.
         MenuMain main = new MenuMain(false,palette);
@@ -142,24 +146,24 @@ public class Roguelike {
     public static void main(String[] args) {
 
         Global.setUpGlobal();
-        Global.saveDir = "echdah-save";
+//        Global.saveDir = "echdah-save";
+//
+//        ArrayList<Feature> feature = new ArrayList<>();
+//        feature.add(new Feature(Feature.feature.grass_floor, 100));
+//        Map t = GenerateMap.generateNewMap(feature, new Overworld(1,1));
+//        t.pos = new Position(1,1);
+//
+//        FileWriter.saveMap(t);
+//
+//        Overworld o = new Overworld(5,5);
+//        o.allMaps = GenerateOverworld.createOverworld(5,5);
+//
+//        FileWriter.saveOverwolrd(o);
+//
+//        Player player = new Player(new int[8], new Point(0,0), new ArrayList<Object>(), 0, 0, 0, "echdah");
+//        FileWriter.savePlayer(player);
 
-        ArrayList<Feature> feature = new ArrayList<>();
-        feature.add(new Feature(Feature.feature.grass_floor, 100));
-        Map t = GenerateMap.generateNewMap(feature, new Overworld(1,1));
-        t.pos = new Position(1,1);
-
-        FileWriter.saveMap(t);
-
-        Overworld o = new Overworld(5,5);
-        o.allMaps = GenerateOverworld.createOverworld(5,5);
-
-        FileWriter.saveOverwolrd(o);
-
-        Player player = new Player(new int[8], new Point(0,0), new ArrayList<Object>(), 0, 0, 0, "echdah");
-        FileWriter.savePlayer(player);
-
-        //loop();
+        loop();
         //MovementCalculator test = new MovementCalculator();
 
         //test.initializeMovement();

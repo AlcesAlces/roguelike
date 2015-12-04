@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="libjcsi_resources">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/libjcsi_resources.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
