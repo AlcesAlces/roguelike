@@ -18,6 +18,7 @@ public class RaceInitialStats {
         int[] initialStat = new int[7];
         
         switch (raceID) {
+            //Human
             case 0:
                 initialStat[0] = 50;
                 initialStat[1] = 15;
@@ -27,6 +28,7 @@ public class RaceInitialStats {
                 initialStat[5] = 5;
                 initialStat[6] = 5;
                 return initialStat;
+            //Elf
             case 1:
                 initialStat[0] = 40;
                 initialStat[1] = 25;
@@ -36,6 +38,7 @@ public class RaceInitialStats {
                 initialStat[5] = 7;
                 initialStat[6] = 7;
                 return initialStat;
+            //Orc
             case 2:
                 initialStat[0] = 60;
                 initialStat[1] = 5;
@@ -45,6 +48,7 @@ public class RaceInitialStats {
                 initialStat[5] = 1;
                 initialStat[6] = 2;
                 return initialStat;
+            //Flying nun
             case 3:
                 initialStat[0] = 35;
                 initialStat[1] = 15;
@@ -54,6 +58,7 @@ public class RaceInitialStats {
                 initialStat[5] = 2;
                 initialStat[6] = 2;
                 return initialStat;
+            //Goblin
             case 4:
                 initialStat[0] = 20;
                 initialStat[1] = 0;
@@ -63,6 +68,7 @@ public class RaceInitialStats {
                 initialStat[5] = 0;
                 initialStat[6] = 0;
                 return initialStat;
+            //Wight
             case 5:
                 initialStat[0] = 50;
                 initialStat[1] = 15;

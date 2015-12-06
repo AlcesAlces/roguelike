@@ -72,6 +72,7 @@ public class MenuMain extends Menu {
                         break;
                     case 3:
                         responseIndex = 3;
+                        menu = false;
                         break;
                     default:
                         break;

@@ -1,9 +1,9 @@
 package roguelike.map.generation;
 
-import net.slashie.libjcsi.CSIColor;
-import net.slashie.util.Position;
 import roguelike.map.Map;
 import roguelike.map.tiles.Tile;
+
+import java.awt.*;
 
 /*
  * A note about feature creation: Feature creation is done consecutively.
@@ -43,7 +43,7 @@ public class FeatureGenerator {
         for(int i = 0; i < toGen.x; i++){
             for(int j = 0; j < toGen.y; j++){
                 //TODO: Relocate the symbol for grass somewhere?
-                toGen.tiles[i][j] = new Tile(new Position(i,j), ",", Tile.tiletype.floor, true, "Green");
+                toGen.tiles[i][j] = new Tile(new Point(i,j), ",", Tile.tiletype.floor, true, "Green");
             }
         }
     }

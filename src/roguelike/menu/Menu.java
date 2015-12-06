@@ -95,22 +95,20 @@ public class Menu {
 
         //Determine how to draw stuff via the enum
         switch(splash){
+            case border:
+                //The border starts at 1,1 and goes x-2 and y-2 (1 block on both sides)
+                splashPoint = new Point(0,0);
+                //xLen /= 2;
+                yLen /= 2;
+                drawFrame(term, term.getHeight(), term.getWidth(), new Point(0, term.getHeight() - 1));
+                drawTitleTop(term, term.getWidth(), term.getHeight());
+                break;
             case logo:
                 //Take up half the screen for a sweet logo.
                 splashPoint = new Point(0,yLen/2);
                 drawFrame(term, term.getHeight(), term.getWidth(), splashPoint);
                 yLen = yLen/2;
                 drawSplash(term, xLen, yLen);
-                break;
-            case border:
-                //The border starts at 1,1 and goes x-2 and y-2 (1 block on both sides)
-                splashPoint = new Point(1,1);
-                int tempX = xLen;
-                int tempY = yLen;
-                //xLen /= 2;
-                yLen /= 2;
-                drawFrame(term, tempY, tempX, new Point(0, tempY));
-                drawTitleTop(term, tempX, tempY);
                 break;
             case none:
             default:
@@ -157,9 +155,9 @@ public class Menu {
         int startX = (xLen/2) - (menuTitle.length() / 2);
         int startY = (yLen/2);
         term.mvputs(startY,startX, menuTitle);
-        for(int i = startX; i < startX + menuTitle.length(); i++) {
-            //term.get(startY, i).setForeground(menuTitleColor);
-        }
+//        for(int i = startX; i < startX + menuTitle.length(); i++) {
+//            //term.get(startY, i).setForeground(menuTitleColor);
+//        }
     }
 
     public void drawTitleTop(CursesLikeAPI term, int xLen, int yLen){

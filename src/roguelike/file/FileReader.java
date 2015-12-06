@@ -51,8 +51,7 @@ public class FileReader {
 
         if(!file.exists())
         {
-            //RUH ROH!
-            //TODO: Do something about this error.
+            return null;
         }
         try {
             FileInputStream fin = new FileInputStream(dir);
@@ -62,6 +61,7 @@ public class FileReader {
         }
         catch(Exception ex){
             //TODO: Handle this.
+            int i = 0;
         }
 
         return toReturn;

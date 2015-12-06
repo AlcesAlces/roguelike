@@ -78,7 +78,7 @@ public class FileWriter {
         checkDirectory(Global.saveDir + "\\map");
 
         try {
-            String dir = Global.saveDir + "\\map\\" + map.pos.x + "," + map.pos.y;
+            String dir = Global.saveDir + "\\map\\" + map.overworldPoint.x + "," + map.overworldPoint.y;
 
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(dir));
             oos.writeObject(map);

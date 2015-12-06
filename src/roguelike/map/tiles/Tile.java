@@ -2,12 +2,12 @@ package roguelike.map.tiles;
 
 import com.googlecode.blacken.terminal.CellWalls;
 import com.googlecode.blacken.terminal.TerminalCellLike;
-import net.slashie.libjcsi.CSIColor;
-import net.slashie.util.Position;
 import roguelike.map.Map;
 
+import java.awt.*;
 import java.io.Serializable;
 import java.util.*;
+import java.util.List;
 
 public class Tile implements Serializable {
 
@@ -26,7 +26,7 @@ public class Tile implements Serializable {
         }
     }
 
-    public Position position;
+    public Point position;
     public String description;
     public String symbol;
     public tiletype type;
@@ -43,7 +43,7 @@ public class Tile implements Serializable {
 
     }
 
-    public Tile(Position p, String s, tiletype t, Boolean pass, String c)
+    public Tile(Point p, String s, tiletype t, Boolean pass, String c)
     {
         generated = true;
         position = p;
@@ -76,5 +76,9 @@ public class Tile implements Serializable {
             }
             cell.setCellWalls(new HashSet<>(walls));
         }
+    }
+
+    public boolean validForTransition(){
+        return (isPass && !isOccupied && generated);
     }
 }

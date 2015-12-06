@@ -1,8 +1,14 @@
 package roguelike.map;
 
-import net.slashie.util.Position;
+import java.awt.*;
+import java.io.Serializable;
 
-public class Transition {
-    public Position pos;
+public class Transition implements Serializable{
+    public Point pos;
     public Map.Direction dir;
+
+    public Transition(Point pt, Map.Direction dir){
+        this.pos = pt;
+        this.dir = dir;
+    }
 }

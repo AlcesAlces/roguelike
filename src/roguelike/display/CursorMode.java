@@ -23,7 +23,7 @@ public class CursorMode {
         //map.drawElements(csi, frameLocUp, frameLocDown, null);
         //map.drawItems(frameLocUp, frameLocDown, csi);
         //map.drawPlayerStatus(player, csi);
-        csi.print(player.creaturePoint.x - (frameLocUp.x - 1),player.creaturePoint.y - (frameLocUp.y - 1), '@', CSIColor.WHITE);
+        csi.print(player.point.x - (frameLocUp.x - 1),player.point.y - (frameLocUp.y - 1), '@', CSIColor.WHITE);
             
         Point tempPoint = new Point(cursorPointActual);
         csi.print(cursorPoint.x, cursorPoint.y, 'X', CSIColor.WHITE);

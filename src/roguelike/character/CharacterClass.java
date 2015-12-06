@@ -18,7 +18,7 @@ public class CharacterClass {
         int[] statsToReturn = new int[7];
         
         switch (classID) {
-            case 00:
+            case 0:
                 statsToReturn[0] = 5;
                 statsToReturn[1] = 0;
                 statsToReturn[2] = 2;
@@ -28,7 +28,7 @@ public class CharacterClass {
                 statsToReturn[6] = 0;
                 return statsToReturn;
                 
-            case 01:
+            case 1:
                 statsToReturn[0] = 2;
                 statsToReturn[1] = 1;
                 statsToReturn[2] = 1;
@@ -38,7 +38,7 @@ public class CharacterClass {
                 statsToReturn[6] = 0;
                 return statsToReturn;
                 
-            case 02:
+            case 2:
                 statsToReturn[0] = 0;
                 statsToReturn[1] = 5;
                 statsToReturn[2] = 0;
@@ -56,11 +56,11 @@ public class CharacterClass {
     public static String classIDToString(int classID) {
         
         switch (classID) {
-            case 00:
+            case 0:
                 return "Warrior";
-            case 01:
+            case 1:
                 return "Rogue";
-            case 02:
+            case 2:
                 return "Wizard";
         }
         return null;

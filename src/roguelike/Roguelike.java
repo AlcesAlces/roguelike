@@ -10,6 +10,7 @@ import net.slashie.util.Position;
 import roguelike.character.Player;
 import roguelike.display.DrawMap;
 import roguelike.display.DrawUi;
+import roguelike.display.OverworldDisplay;
 import roguelike.file.FileReader;
 import roguelike.file.FileWriter;
 import roguelike.map.Map;
@@ -44,15 +45,12 @@ public class Roguelike {
             term.setCurForeground("White");
         }
 
-        MenuCreateCharacter m = new MenuCreateCharacter(palette);
-        m.drawMenu(term, palette);
-
         //Main menu section.
         MenuMain main = new MenuMain(false,palette);
         main.drawMenu(term, palette);
 
         //Handle map init based on user selections in main menu.
-        Overworld ow = handleContent(main.responseIndex);
+        Overworld ow = handleContent(main.responseIndex, term, palette);
         boolean running = true;
         if(ow == null) {
             running = false;
@@ -60,57 +58,58 @@ public class Roguelike {
         ArrayList<Feature> feat = new ArrayList<>();
         feat.add(new Feature(Feature.feature.grass_floor, 100));
 
-        //Active map
-        Map map = ow.getCurrentMap();
-        ArrayList<Object> dummyItemArray = new ArrayList<>();
+        //Active player
         Player player = Global.player;
 
-
-        //Sets up where we draw the center of the screen.
-        Point displayPoint = new Point((player.creaturePoint.x - (term.getWidth() / 2)),
-                player.creaturePoint.y - (term.getHeight() / 2));
-
         while (running) {
+
+            //Sets up where we draw the center of the screen.
+            Point displayPoint = new Point((player.point.x - (term.getWidth() / 2)),
+                    player.point.y - (term.getHeight() / 2));
+
             int yLen = term.getHeight();
             int xLen = term.getWidth();
             term.clear();
             //Contain all of our drawing garbage
-            DrawMap.drawAllElements(displayPoint, map, player, term, xLen, yLen, palette);
-            DrawUi.drawUI(displayPoint, map, player, term, xLen, yLen, palette);
+            DrawMap.drawAllElements(displayPoint, ow.getCurrentMap(), player, term, xLen, yLen, palette);
+            DrawUi.drawUI(displayPoint, ow.getCurrentMap(), player, term, xLen, yLen, palette);
 
             term.refresh();
             ch = term.getch();
 
             switch (ch) {
                 case BlackenKeys.KEY_UP:
-                    if (map.checkMove(Map.Direction.up, player.creaturePoint)) {
-                        map.moveCharacter(player, Map.Direction.up);
+                    if (ow.getCurrentMap().checkMove(Map.Direction.up, player.point)) {
+                        ow.getCurrentMap().moveCharacter(player, Map.Direction.up, ow);
                         displayPoint.translate(0, -1);
                         Global.log.addLog("You went up");
                     }
                     break;
                 case BlackenKeys.KEY_DOWN:
-                    if (map.checkMove(Map.Direction.down, player.creaturePoint)) {
-                        map.moveCharacter(player, Map.Direction.down);
+                    if (ow.getCurrentMap().checkMove(Map.Direction.down, player.point)) {
+                        ow.getCurrentMap().moveCharacter(player, Map.Direction.down, ow);
                         displayPoint.translate(0, 1);
                         Global.log.addLog("You went down");
                     }
                     break;
                 case BlackenKeys.KEY_LEFT:
-                    if (map.checkMove(Map.Direction.left, player.creaturePoint)) {
-                        map.moveCharacter(player, Map.Direction.left);
+                    if (ow.getCurrentMap().checkMove(Map.Direction.left, player.point)) {
+                        ow.getCurrentMap().moveCharacter(player, Map.Direction.left, ow);
                         displayPoint.translate(-1, 0);
                     }
                     break;
                 case BlackenKeys.KEY_RIGHT:
-                    if (map.checkMove(Map.Direction.right, player.creaturePoint)) {
-                        map.moveCharacter(player, Map.Direction.right);
+                    if (ow.getCurrentMap().checkMove(Map.Direction.right, player.point)) {
+                        ow.getCurrentMap().moveCharacter(player, Map.Direction.right, ow);
                         displayPoint.translate(1, 0);
                     }
                     break;
                 case BlackenKeys.KEY_ESCAPE:
                     running = false;
                     quit = true;
+                    break;
+                case (int)'m':
+                    OverworldDisplay.displayOverworld(ow,ow.sizeX, ow.sizeY, term, Global.player.overworldPoint, palette);
                 default:
                     break;
             }
@@ -119,7 +118,7 @@ public class Roguelike {
 
     //Decides how to proceed
     @Nullable
-    public static Overworld handleContent(int resp){
+    public static Overworld handleContent(int resp, CursesLikeAPI term, ColorPalette palette){
 
         Overworld toReturn = null;
         switch(resp) {
@@ -134,8 +133,24 @@ public class Roguelike {
                 int defaultY = 50;
                 toReturn = new Overworld(defaultX, defaultY);
                 toReturn.FillOverworld();
+                MenuCreateCharacter m = new MenuCreateCharacter(palette);
+                m.drawMenu(term, palette);
                 break;
             case 2:
+                break;
+            case 3:
+
+                toReturn = new Overworld(50, 50);
+                toReturn.FillOverworld();
+                //Generate user's first map
+                Point rand = new Point(((int) (Math.random() * 50)),((int) (Math.random() * 50)));
+                Global.player = new Player();
+                Global.player.overworldPoint = rand;
+                Global.player.point = new Point(10,10);
+                Global.player.name = "echdah";
+                Global.saveDir = "echdah-save";
+                toReturn.SwapInMap(rand);
+                break;
             default:
                 break;
         }

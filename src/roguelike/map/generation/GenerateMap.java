@@ -5,6 +5,7 @@ import net.slashie.util.Position;
 import roguelike.Global;
 import roguelike.map.Map;
 import roguelike.map.Overworld;
+import roguelike.map.Transition;
 import roguelike.map.tiles.Tile;
 
 import java.awt.*;
@@ -16,16 +17,19 @@ public class GenerateMap {
     static int scaleX = 100;
     static int scaleY = 50;
 
-    public static Map generateNewMap(ArrayList<Feature> features, Overworld overworld)
+    public static Map generateNewMap(Overworld overworld, Point owPoint)
     {
         //Empty constructor, all default values.
         Map map = new Map();
-        map.mapFeatures = features;
+        //This represents the type of map this is.
+        map.mapFeatures = overworld.allMaps[owPoint.x][owPoint.y].getFeaturesFromType();
+        map.overworldPoint = owPoint;
 
         createSize(scaleX, scaleY, map);
         createEmptyTiles(map);
         FeatureGenerator.generateFeatures(map);
         setMapEdges(map);
+        generateTransitions(overworld, map);
         return map;
     }
 
@@ -98,8 +102,116 @@ public class GenerateMap {
         }
     }
 
-    private static void generateTransitions(Overworld ow){
+    private static void generateTransitions(Overworld ow, Map map){
 
+        Point owp = map.overworldPoint;
+
+        //Check up
+        Point temp = new Point(owp.x,owp.y-1);
+        if(temp.y >= 0){
+            //Valid to check
+            if(!ow.allMaps[temp.x][temp.y].isEmpty){
+                //Valid
+                SetTransition(map, Map.Direction.up);
+            }
+        }
+        //Check down
+        temp = new Point(owp.x,owp.y+1);
+        if(temp.y < map.y){
+            if(!ow.allMaps[temp.x][temp.y].isEmpty){
+                SetTransition(map,Map.Direction.down);
+            }
+        }
+        //Check left
+        temp = new Point(owp.x-1,owp.y);
+        if(temp.x > 0){
+            if(!ow.allMaps[temp.x][temp.y].isEmpty){
+                SetTransition(map, Map.Direction.left);
+            }
+        }
+        //Check right
+        temp = new Point(owp.x+1,owp.y);
+        if(temp.x < map.x){
+            if(!ow.allMaps[temp.x][temp.y].isEmpty){
+                SetTransition(map, Map.Direction.right);
+            }
+        }
+    }
+
+    private static void SetTransition(Map map, Map.Direction dir){
+
+        Tile toset;
+        ArrayList<Tile> tiles = new ArrayList<>();
+        boolean found = false;
+        Map.Direction dts = Map.Direction.down;
+
+        switch(dir){
+            case up:
+                //Check top to bottom for valid tiles.
+                for(int i = 0; i < map.y; i++){
+                    for(int j = 0; j < map.x; j++){
+                        if(map.tiles[j][i].validForTransition()){
+                            tiles.add(map.tiles[j][i]);
+                            found = true;
+                        }
+                    }
+                    if(found){
+                        break;
+                    }
+                }
+                break;
+            case down:
+                //Check top to bottom for valid tiles.
+                for(int i = map.y-1; i >= 0; i--){
+                    for(int j = 0; j < map.x; j++){
+                        if(map.tiles[j][i].validForTransition()){
+                            tiles.add(map.tiles[j][i]);
+                            found = true;
+                            dts = Map.Direction.up;
+                        }
+                    }
+                    if(found){
+                        break;
+                    }
+                }
+                break;
+            case left:
+                for(int i = 0; i < map.x; i++){
+                    for(int j = 0; j < map.y; j++){
+                        if(map.tiles[i][j].validForTransition()){
+                            tiles.add(map.tiles[i][j]);
+                            found = true;
+                            dts = Map.Direction.right;
+                        }
+                    }
+                    if(found){
+                        break;
+                    }
+                }
+                break;
+            case right:
+                for(int i = map.x-1; i >= 0; i--){
+                    for(int j = 0; j < map.y; j++){
+                        if(map.tiles[i][j].validForTransition()){
+                            tiles.add(map.tiles[i][j]);
+                            found = true;
+                            dts = Map.Direction.left;
+                        }
+                    }
+                    if(found){
+                        break;
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+        int ran = (int) (Math.random() * tiles.size());
+        toset = tiles.get(ran);
+        toset.isTransition = true;
+        toset.symbol = "!";
+        map.transitions.put(new Point(toset.position.x, toset.position.y),
+                            new Transition(new Point(toset.position.x, toset.position.y), dts));
     }
 
 }

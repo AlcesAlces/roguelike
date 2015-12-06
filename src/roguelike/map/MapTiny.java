@@ -1,7 +1,10 @@
 package roguelike.map;
 
+import roguelike.map.generation.Feature;
+
 import java.awt.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * This class represents the smallest possible object needed by the overworld map
@@ -31,5 +34,12 @@ public class MapTiny implements Serializable{
         Id = i;
         point = p;
         type = t;
+    }
+
+    public ArrayList<Feature> getFeaturesFromType(){
+        //TODO: Actually fill this.
+        ArrayList<Feature> toReturn = new ArrayList<>();
+        toReturn.add(new Feature(Feature.feature.grass_floor, 100));
+        return toReturn;
     }
 }

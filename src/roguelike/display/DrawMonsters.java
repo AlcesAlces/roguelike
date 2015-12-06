@@ -13,8 +13,8 @@ public class DrawMonsters {
     
     public void drawMonstersOnMap(ConsoleSystemInterface csi) {
         for (int i = 0; i < monsterList.size(); i++) {
-            csi.print(monsterList.get(i).creaturePoint.x, 
-                    monsterList.get(i).creaturePoint.y, "G", CSIColor.PINK);
+            csi.print(monsterList.get(i).point.x,
+                    monsterList.get(i).point.y, "G", CSIColor.PINK);
         }
     }
 }

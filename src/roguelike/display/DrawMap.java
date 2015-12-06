@@ -18,7 +18,7 @@ public class DrawMap {
                         try {
                             //term.mvputs(i - displayPoint.x, j - displayPoint.y, mt[i][j].symbol + "");
                             map.tiles[i][j].setBoarder(term.get(j - displayPoint.y, i - displayPoint.x));
-                            if (player.creaturePoint.equals(new Point(i, j))) {
+                            if (player.point.equals(new Point(i, j))) {
                                 term.set(j - displayPoint.y, i - displayPoint.x, "@", palette.get("White"), palette.get("Black"));
                             } else {
                                 term.set(j - displayPoint.y, i - displayPoint.x, map.tiles[i][j].symbol, palette.get(map.tiles[i][j].color), palette.get("Black"));

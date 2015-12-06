@@ -1,21 +1,13 @@
 package roguelike.map;
 
-import net.slashie.util.Position;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import com.sun.istack.internal.Nullable;
 import roguelike.creatures.Creature;
 import roguelike.map.generation.Feature;
 import roguelike.map.tiles.Tile;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Map implements Serializable{
 
@@ -25,10 +17,10 @@ public class Map implements Serializable{
     public int x;
     public int y;
     protected ArrayList<Creature> monsters = new ArrayList<>();
-    public ArrayList<Transition> transitions = new ArrayList<>();
+    public HashMap<Point, Transition> transitions = new HashMap<>();
     public ArrayList<Feature> mapFeatures = new ArrayList<>();
-    public Position pos;
     private String path = "";
+    public Point overworldPoint;
 
     public boolean checkMove(Direction dir, Point pos)
     {
@@ -57,30 +49,37 @@ public class Map implements Serializable{
         }
     }
 
-    public void moveCharacter(Creature toMove, Direction dir)
+    public void moveCharacter(Creature toMove, Direction dir, Overworld ow)
     {
-        Position temp = new Position(0,0);
-        Position pos = new Position(toMove.creaturePoint.x, toMove.creaturePoint.y);
+        Point temp = new Point(0,0);
+        Point pos = new Point(toMove.point.x, toMove.point.y);
         //Check the direction the creature wants to move.
         switch(dir)
         {
             case up:
-                temp = new Position(pos.x, pos.y - 1);
+                temp = new Point(pos.x, pos.y - 1);
                 break;
             case down:
-                temp = new Position(pos.x, pos.y + 1);
+                temp = new Point(pos.x, pos.y + 1);
                 break;
             case left:
-                temp = new Position(pos.x - 1, pos.y);
+                temp = new Point(pos.x - 1, pos.y);
                 break;
             case right:
-                temp = new Position(pos.x + 1, pos.y);
+                temp = new Point(pos.x + 1, pos.y);
                 break;
         }
         //Set the tiles to occupied/not occupied and then translate the character's position.
-        toMove.creaturePoint = new Point(temp.x, temp.y);
-        tiles[temp.x][temp.y].isOccupied = true;
-        tiles[pos.x][pos.y].isOccupied = false;
+        if(tiles[temp.x][temp.y].isTransition)
+        {
+            //Handle transition
+            ow.HandleTransition(this, transitions.get(new Point(temp.x, temp.y)));
+        }
+        else {
+            toMove.point = new Point(temp.x, temp.y);
+            tiles[temp.x][temp.y].isOccupied = true;
+            tiles[pos.x][pos.y].isOccupied = false;
+        }
     }
 
     public boolean checkIfGenerated()
@@ -88,11 +87,6 @@ public class Map implements Serializable{
         return true;
     }
 
-    //Load a single map into this object from memory.
-    public void loadFromFile(Position pos)
-    {
-
-    }
 
     public void initTiles(int sx, int sy)
     {
@@ -112,5 +106,19 @@ public class Map implements Serializable{
         else{
             initTiles(x,y);
         }
+    }
+
+    @Nullable
+    public Transition getTransitionByDir(Direction dir){
+
+        Transition toReturn = null;
+
+        for(Transition t : transitions.values()){
+            if(t.dir == dir){
+                toReturn = t;
+            }
+        }
+
+        return toReturn;
     }
 }

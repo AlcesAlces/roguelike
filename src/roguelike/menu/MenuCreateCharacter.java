@@ -33,7 +33,10 @@ public class MenuCreateCharacter extends Menu{
         toAdd.add(new MenuItem("Orc", 2, false, ac, ic, descriptionString));
         //Add the races
         items.add(toAdd);
-        //Stats:0
+        toAdd = new ArrayList<>();
+        toAdd.add(new MenuItem("Name: __________", 0, false, ac, ic, descriptionString));
+        items.add(toAdd);
+        //Stats:2
         toAdd = new ArrayList<>();
         toAdd.add(new MenuItem("Strength", 0, true, ac, ic, descriptionString));
         toAdd.add(new MenuItem("Dexterity", 1, true, ac, ic, descriptionString));
@@ -66,6 +69,7 @@ public class MenuCreateCharacter extends Menu{
                     indexDown();
                     break;
                 case BlackenKeys.KEY_ENTER:
+                    makeSelection();
                     break;
                 case BlackenKeys.KEY_ESCAPE:
                     menu = false;
@@ -73,5 +77,9 @@ public class MenuCreateCharacter extends Menu{
                     break;
             }
         }
+    }
+
+    private void makeSelection(){
+
     }
 }
