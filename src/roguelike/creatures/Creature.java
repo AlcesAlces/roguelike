@@ -1,5 +1,7 @@
 package roguelike.creatures;
 
+import roguelike.creatures.race_class.Race;
+import roguelike.stats.Level;
 import roguelike.stats.Stats;
 
 import java.awt.Point;
@@ -17,5 +19,20 @@ public class Creature implements Serializable{
     public String name;
     private Stats base;
     private Stats equiped;
+    private Race race;
+    public Level level;
+
+    //Persuit stuff
+    public boolean aggro = false;
+    public int aggroRange = 10;
+
+    char symbol = '?';
+    String color = "Blue";
+
+    public Creature(int level, Race race){
+        this.level = new Level(level);
+        this.race = race;
+        base = new Stats(this.level.level, this.race);
+    }
 
 }

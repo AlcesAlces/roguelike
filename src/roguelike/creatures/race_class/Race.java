@@ -3,7 +3,9 @@ package roguelike.creatures.race_class;
 
 import roguelike.stats.Stats;
 
-public class Race {
+import java.io.Serializable;
+
+public class Race implements Serializable{
 
     public enum RACE {
         human(0), elf(1);
@@ -32,8 +34,8 @@ public class Race {
         switch(toSet){
             //TODO: Fill these properly.
             case human:
-                prog = new double[]{0,0,0,0,0,0,0};
-                start = new double[]{0,0,0,0,0,0,0};
+                prog = new double[]{5,2.5,1,1,1,1,1};
+                start = new double[]{20,10,5,5,5,5,5};
                 race = toSet;
                 progression = new Stats(prog);
                 starting = new Stats(start);

@@ -1,23 +1,5 @@
 package roguelike;
 
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.Properties;
-import net.slashie.libjcsi.CSIColor;
-import net.slashie.libjcsi.CharKey;
-import net.slashie.libjcsi.ConsoleSystemInterface;
-import net.slashie.libjcsi.wswing.WSwingConsoleInterface;
-import net.slashie.util.Position;
-import roguelike.character.CharacterStatusScreen;
-import roguelike.character.LevelUp;
-import roguelike.character.Player;
-import roguelike.combat.Combat;
-import roguelike.creatures.GenerateMonsters;
-import roguelike.creatures.MonsterAIPrototype;
-import roguelike.display.*;
-import roguelike.magic.MagicSpellsBank;
-import roguelike.map.*;
-
 public class MovementCalculator {
     
 //    void initializeMovement() {

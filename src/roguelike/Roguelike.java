@@ -6,18 +6,18 @@ import com.googlecode.blacken.swing.SwingTerminal;
 import com.googlecode.blacken.terminal.BlackenKeys;
 import com.googlecode.blacken.terminal.CursesLikeAPI;
 import com.sun.istack.internal.Nullable;
-import net.slashie.util.Position;
 import roguelike.character.Player;
+import roguelike.creatures.MonsterAI;
+import roguelike.creatures.race_class.Race;
 import roguelike.display.DrawMap;
 import roguelike.display.DrawUi;
 import roguelike.display.OverworldDisplay;
-import roguelike.file.FileReader;
 import roguelike.file.FileWriter;
 import roguelike.map.Map;
 import roguelike.map.Overworld;
 import roguelike.map.generation.Feature;
-import roguelike.map.generation.GenerateMap;
-import roguelike.map.generation.GenerateOverworld;
+import roguelike.menu.ContinueMenu;
+import roguelike.menu.Menu;
 import roguelike.menu.MenuCreateCharacter;
 import roguelike.menu.MenuMain;
 
@@ -27,6 +27,7 @@ import java.util.ArrayList;
 public class Roguelike {
 
     static boolean quit = false;
+    static boolean monsterAIToggle = true;
 
     public static void loop() {
 
@@ -45,22 +46,25 @@ public class Roguelike {
             term.setCurForeground("White");
         }
 
-        //Main menu section.
-        MenuMain main = new MenuMain(false,palette);
-        main.drawMenu(term, palette);
+        boolean mainMenu = true;
+        Overworld ow = null;
 
-        //Handle map init based on user selections in main menu.
-        Overworld ow = handleContent(main.responseIndex, term, palette);
-        boolean running = true;
-        if(ow == null) {
-            running = false;
+        while(mainMenu) {
+            //Main menu section.
+            MenuMain main = new MenuMain(false, palette);
+            main.drawMenu(term, palette);
+
+            //Handle map init based on user selections in main menu.
+            ow = handleContent(main.responseIndex, term, palette);
+
+            if (ow != null) {
+                mainMenu = false;
+            }
         }
-        ArrayList<Feature> feat = new ArrayList<>();
-        feat.add(new Feature(Feature.feature.grass_floor, 100));
 
         //Active player
         Player player = Global.player;
-
+        boolean running = true;
         while (running) {
 
             //Sets up where we draw the center of the screen.
@@ -76,6 +80,7 @@ public class Roguelike {
 
             term.refresh();
             ch = term.getch();
+            boolean playerActed = false;
 
             switch (ch) {
                 case BlackenKeys.KEY_UP:
@@ -83,6 +88,7 @@ public class Roguelike {
                         ow.getCurrentMap().moveCharacter(player, Map.Direction.up, ow);
                         displayPoint.translate(0, -1);
                         Global.log.addLog("You went up");
+                        playerActed = true;
                     }
                     break;
                 case BlackenKeys.KEY_DOWN:
@@ -90,28 +96,39 @@ public class Roguelike {
                         ow.getCurrentMap().moveCharacter(player, Map.Direction.down, ow);
                         displayPoint.translate(0, 1);
                         Global.log.addLog("You went down");
+                        playerActed = true;
                     }
                     break;
                 case BlackenKeys.KEY_LEFT:
                     if (ow.getCurrentMap().checkMove(Map.Direction.left, player.point)) {
                         ow.getCurrentMap().moveCharacter(player, Map.Direction.left, ow);
                         displayPoint.translate(-1, 0);
+                        playerActed = true;
                     }
                     break;
                 case BlackenKeys.KEY_RIGHT:
                     if (ow.getCurrentMap().checkMove(Map.Direction.right, player.point)) {
                         ow.getCurrentMap().moveCharacter(player, Map.Direction.right, ow);
                         displayPoint.translate(1, 0);
+                        playerActed = true;
                     }
                     break;
                 case BlackenKeys.KEY_ESCAPE:
                     running = false;
                     quit = true;
                     break;
+                case 'x':
+                    monsterAIToggle = !monsterAIToggle;
+                    System.out.println("AI has been toggled");
+                    break;
                 case (int)'m':
                     OverworldDisplay.displayOverworld(ow,ow.sizeX, ow.sizeY, term, Global.player.overworldPoint, palette);
                 default:
                     break;
+            }
+
+            if(playerActed && monsterAIToggle){
+                MonsterAI.CreatureAction(player,ow.getCurrentMap());
             }
         }
     }
@@ -124,6 +141,9 @@ public class Roguelike {
         switch(resp) {
             case 0:
                 //continue
+                ContinueMenu cm = new ContinueMenu(palette);
+                cm.drawMenu(term,palette);
+                toReturn = cm.loadedOverworld;
                 break;
             case 1:
                 //New game
@@ -143,13 +163,15 @@ public class Roguelike {
                 toReturn = new Overworld(50, 50);
                 toReturn.FillOverworld();
                 //Generate user's first map
-                Point rand = new Point(((int) (Math.random() * 50)),((int) (Math.random() * 50)));
-                Global.player = new Player();
+                Point rand = toReturn.findRandomCreatureStart();
+                Global.player = new Player(1, new Race(Race.RACE.elf));
                 Global.player.overworldPoint = rand;
                 Global.player.point = new Point(10,10);
                 Global.player.name = "echdah";
                 Global.saveDir = "echdah-save";
                 toReturn.SwapInMap(rand);
+                FileWriter.savePlayer(Global.player);
+                FileWriter.saveOverwolrd(toReturn);
                 break;
             default:
                 break;

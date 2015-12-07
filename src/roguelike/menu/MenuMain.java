@@ -62,6 +62,7 @@ public class MenuMain extends Menu {
                 switch(item.index){
                     case 0:
                         responseIndex = 0;
+                        menu = false;
                         break;
                     case 1:
                         responseIndex = 1;

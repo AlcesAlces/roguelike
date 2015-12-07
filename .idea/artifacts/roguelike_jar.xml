@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="roguelike:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/roguelike_jar</output-path>
+    <root id="archive" name="roguelike.jar">
+      <element id="module-output" name="roguelike" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libjcsi.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../slf4j-api-1.7.13.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../blacken-core-1.1.1.jar" path-in-jar="/" />
+      <element id="library" level="project" name="blacken-core-1.1.1-javadoc" />
+      <element id="library" level="project" name="blacken-core-1.1.1" />
+    </root>
+  </artifact>
+</component>

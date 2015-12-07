@@ -116,4 +116,18 @@ public class Overworld implements Serializable {
             currentMap = map;
         }
     }
+
+    public Point findRandomCreatureStart(){
+        Point toReturn = new Point(0,0);
+        int tries = 0;
+        int totalTries = 100;
+        while(tries < totalTries) {
+            Point rand = new Point(((int) (Math.random() * sizeX)), ((int) (Math.random() * sizeY)));
+            if(!allMaps[rand.x][rand.y].isEmpty){
+                toReturn = rand;
+                break;
+            }
+        }
+        return toReturn;
+    }
 }

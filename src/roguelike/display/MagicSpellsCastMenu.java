@@ -7,7 +7,6 @@ import net.slashie.libjcsi.ConsoleSystemInterface;
 import roguelike.EventLog;
 import roguelike.character.Player;
 import roguelike.combat.Combat;
-import roguelike.creatures.MonsterAIPrototype;
 import roguelike.map.Map;
 
 public class MagicSpellsCastMenu {

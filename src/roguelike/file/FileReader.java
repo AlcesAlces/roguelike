@@ -2,7 +2,9 @@ package roguelike.file;
 
 import com.sun.istack.internal.Nullable;
 import roguelike.Global;
+import roguelike.character.Player;
 import roguelike.map.Map;
+import roguelike.map.Overworld;
 
 import java.awt.*;
 import java.io.*;
@@ -34,7 +36,7 @@ public class FileReader {
             for (File name : names) {
                 String[] split = name.getName().split("(?=-)");
                 if (split[split.length - 1].equals("-save")) {
-                    toReturn.add(name.getName());
+                    toReturn.add(split[0]);
                 }
             }
         }
@@ -62,6 +64,42 @@ public class FileReader {
         catch(Exception ex){
             //TODO: Handle this.
             int i = 0;
+        }
+
+        return toReturn;
+    }
+
+    @Nullable
+    public static Player getPlayer(String name){
+        String dir = Global.saveDir + "\\" + name;
+        Player toReturn = null;
+
+        try{
+            FileInputStream fin = new FileInputStream(dir);
+            ObjectInputStream ois = new ObjectInputStream(fin);
+            toReturn = (Player) ois.readObject();
+            ois.close();
+        }
+        catch(Exception ex){
+            System.out.println("Error in player load function");
+        }
+
+        return toReturn;
+    }
+
+    @Nullable
+    public static Overworld getOverworld(){
+        String dir = Global.saveDir + "\\overworld";
+        Overworld toReturn = null;
+
+        try{
+            FileInputStream fin = new FileInputStream(dir);
+            ObjectInputStream ois = new ObjectInputStream(fin);
+            toReturn = (Overworld) ois.readObject();
+            ois.close();
+        }
+        catch(Exception ex){
+            System.out.println("Error in overworld load function");
         }
 
         return toReturn;

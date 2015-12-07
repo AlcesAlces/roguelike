@@ -30,5 +30,9 @@ public class DrawMap {
                 }
             }
         }
+
+        Rectangle rect = new Rectangle(displayPoint.x, displayPoint.y, xLen, yLen);
+        DrawMonsters tempDraw = new DrawMonsters(map.monsters);
+        tempDraw.drawMonstersOnMap(term,palette,rect, new Point(displayPoint.x, displayPoint.y));
     }
 }

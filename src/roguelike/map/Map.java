@@ -16,7 +16,7 @@ public class Map implements Serializable{
     public Tile[][] tiles;
     public int x;
     public int y;
-    protected ArrayList<Creature> monsters = new ArrayList<>();
+    public ArrayList<Creature> monsters = new ArrayList<>();
     public HashMap<Point, Transition> transitions = new HashMap<>();
     public ArrayList<Feature> mapFeatures = new ArrayList<>();
     private String path = "";
@@ -73,6 +73,7 @@ public class Map implements Serializable{
         if(tiles[temp.x][temp.y].isTransition)
         {
             //Handle transition
+            tiles[pos.x][pos.y].isOccupied = false;
             ow.HandleTransition(this, transitions.get(new Point(temp.x, temp.y)));
         }
         else {
@@ -80,6 +81,13 @@ public class Map implements Serializable{
             tiles[temp.x][temp.y].isOccupied = true;
             tiles[pos.x][pos.y].isOccupied = false;
         }
+    }
+
+    public void moveCharacter(Creature toMove, Point newPoint){
+        Point pos = new Point(toMove.point.x, toMove.point.y);
+        tiles[pos.x][pos.y].isOccupied = false;
+        tiles[newPoint.x][newPoint.y].isOccupied = true;
+        toMove.point = newPoint;
     }
 
     public boolean checkIfGenerated()

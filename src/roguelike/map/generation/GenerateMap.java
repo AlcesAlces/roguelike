@@ -3,6 +3,8 @@ package roguelike.map.generation;
 import net.slashie.libjcsi.CSIColor;
 import net.slashie.util.Position;
 import roguelike.Global;
+import roguelike.creatures.Creature;
+import roguelike.creatures.race_class.Race;
 import roguelike.map.Map;
 import roguelike.map.Overworld;
 import roguelike.map.Transition;
@@ -30,6 +32,7 @@ public class GenerateMap {
         FeatureGenerator.generateFeatures(map);
         setMapEdges(map);
         generateTransitions(overworld, map);
+        Populate(overworld, map);
         return map;
     }
 
@@ -212,6 +215,23 @@ public class GenerateMap {
         toset.symbol = "!";
         map.transitions.put(new Point(toset.position.x, toset.position.y),
                             new Transition(new Point(toset.position.x, toset.position.y), dts));
+    }
+
+    public static void Populate(Overworld ow, Map map){
+
+        int amtToCreate = 10;
+        int playerLevel = Global.player.level.level;
+
+        for(int i = 0; i < amtToCreate; i++){
+            //TODO: Determine race/level/class with the god system.
+            Race race = new Race(Race.RACE.human);
+            Creature temp = new Creature(playerLevel, race);
+
+            Point point = ow.findRandomCreatureStart();
+            temp.point = point;
+
+            map.monsters.add(temp);
+        }
     }
 
 }
